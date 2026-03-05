@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CopyThat — Icon Concepts</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f0f0f;
+    color: #f0f0f0;
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 48px 32px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 48px;
+    letter-spacing: 0.05em;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 32px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover {
+    border-color: #444;
+  }
+
+  .sizes {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .size-label {
+    font-size: 10px;
+    color: #444;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .size-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .concept-label {
+    font-size: 11px;
+    color: #444;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 160px;
+  }
+
+  .checker {
+    width: 48px;
+    height: 48px;
+    background-image: linear-gradient(45deg, #222 25%, transparent 25%),
+      linear-gradient(-45deg, #222 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #222 75%),
+      linear-gradient(-45deg, transparent 75%, #222 75%);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>CopyThat</h1>
+<p class="subtitle">icon concepts — browser extension</p>
+
+<div class="grid">
+
+  <!-- CONCEPT 1: Clipboard + Checkmark -->
+  <div class="card">
+    <div class="icon-name">Concept 1</div>
+    <div class="sizes">
+      <!-- 128px -->
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="38" y="30" width="52" height="68" rx="8" fill="white" opacity="0.15"/>
+          <rect x="34" y="26" width="52" height="68" rx="8" fill="white"/>
+          <rect x="46" y="18" width="28" height="14" rx="7" fill="#1D4ED8"/>
+          <rect x="44" y="22" width="32" height="10" rx="5" fill="white"/>
+          <!-- checkmark -->
+          <path d="M44 62 L56 74 L84 48" stroke="#1D4ED8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <!-- 48px -->
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="38" y="30" width="52" height="68" rx="8" fill="white" opacity="0.15"/>
+          <rect x="34" y="26" width="52" height="68" rx="8" fill="white"/>
+          <rect x="46" y="18" width="28" height="14" rx="7" fill="#1D4ED8"/>
+          <rect x="44" y="22" width="32" height="10" rx="5" fill="white"/>
+          <path d="M44 62 L56 74 L84 48" stroke="#1D4ED8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <!-- 16px -->
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="38" y="30" width="52" height="68" rx="8" fill="white" opacity="0.15"/>
+          <rect x="34" y="26" width="52" height="68" rx="8" fill="white"/>
+          <rect x="46" y="18" width="28" height="14" rx="7" fill="#1D4ED8"/>
+          <rect x="44" y="22" width="32" height="10" rx="5" fill="white"/>
+          <path d="M44 62 L56 74 L84 48" stroke="#1D4ED8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Clipboard with checkmark — "confirmed, copied"</div>
+  </div>
+
+  <!-- CONCEPT 2: Stacked Copy Sheets -->
+  <div class="card">
+    <div class="icon-name">Concept 2</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="85" height="85" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#0F172A"/>
+          <!-- back sheet -->
+          <rect x="44" y="36" width="48" height="58" rx="7" fill="#334155"/>
+          <!-- middle sheet -->
+          <rect x="38" y="30" width="48" height="58" rx="7" fill="#475569"/>
+          <!-- front sheet -->
+          <rect x="32" y="24" width="48" height="58" rx="7" fill="white"/>
+          <!-- lines -->
+          <rect x="42" y="38" width="28" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="42" y="48" width="22" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="42" y="58" width="26" height="4" rx="2" fill="#CBD5E1"/>
+          <!-- copy arrow -->
+          <path d="M68 72 L80 72 L80 68 L90 76 L80 84 L80 80 L68 80 Z" fill="#3B82F6"/>
+        </svg>
+        <div class="size-label">75px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#0F172A"/>
+          <rect x="44" y="36" width="48" height="58" rx="7" fill="#334155"/>
+          <rect x="38" y="30" width="48" height="58" rx="7" fill="#475569"/>
+          <rect x="32" y="24" width="48" height="58" rx="7" fill="white"/>
+          <rect x="42" y="38" width="28" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="42" y="48" width="22" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="42" y="58" width="26" height="4" rx="2" fill="#CBD5E1"/>
+          <path d="M68 72 L80 72 L80 68 L90 76 L80 84 L80 80 L68 80 Z" fill="#3B82F6"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#0F172A"/>
+          <rect x="44" y="36" width="48" height="58" rx="7" fill="#334155"/>
+          <rect x="38" y="30" width="48" height="58" rx="7" fill="#475569"/>
+          <rect x="32" y="24" width="48" height="58" rx="7" fill="white"/>
+          <rect x="42" y="38" width="28" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="42" y="48" width="22" height="4" rx="2" fill="#CBD5E1"/>
+          <rect x="42" y="58" width="26" height="4" rx="2" fill="#CBD5E1"/>
+          <path d="M68 72 L80 72 L80 68 L90 76 L80 84 L80 80 L68 80 Z" fill="#3B82F6"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Stacked pages + arrow — multi-tab stash</div>
+  </div>
+
+  <!-- CONCEPT 3: Bold "CT" Lettermark -->
+  <div class="card">
+    <div class="icon-name">Concept 3</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#18181B"/>
+          <rect x="0" y="64" width="128" height="64" rx="0" fill="#27272A"/>
+          <rect x="0" y="100" width="128" height="28" rx="0" fill="#3F3F46"/>
+          <rect width="128" height="128" rx="28" fill="url(#grad3)"/>
+          <defs>
+            <linearGradient id="grad3" x1="0" y1="0" x2="128" y2="128">
+              <stop offset="0%" stop-color="#6366F1"/>
+              <stop offset="100%" stop-color="#EC4899"/>
+            </linearGradient>
+          </defs>
+          <text x="18" y="86" font-family="Georgia, serif" font-weight="700" font-size="72" fill="white" letter-spacing="-4">CT</text>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="url(#grad3b)"/>
+          <defs>
+            <linearGradient id="grad3b" x1="0" y1="0" x2="128" y2="128">
+              <stop offset="0%" stop-color="#6366F1"/>
+              <stop offset="100%" stop-color="#EC4899"/>
+            </linearGradient>
+          </defs>
+          <text x="18" y="86" font-family="Georgia, serif" font-weight="700" font-size="72" fill="white" letter-spacing="-4">CT</text>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="url(#grad3c)"/>
+          <defs>
+            <linearGradient id="grad3c" x1="0" y1="0" x2="128" y2="128">
+              <stop offset="0%" stop-color="#6366F1"/>
+              <stop offset="100%" stop-color="#EC4899"/>
+            </linearGradient>
+          </defs>
+          <text x="18" y="86" font-family="Georgia, serif" font-weight="700" font-size="72" fill="white" letter-spacing="-4">CT</text>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Bold "CT" lettermark — works at any size</div>
+  </div>
+
+  <!-- CONCEPT 4: Clipboard + Roger That Signal -->
+  <div class="card">
+    <div class="icon-name">Concept 4</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#064E3B"/>
+          <!-- clipboard body -->
+          <rect x="30" y="32" width="68" height="76" rx="9" fill="#ECFDF5"/>
+          <rect x="46" y="22" width="36" height="18" rx="9" fill="#064E3B"/>
+          <rect x="48" y="24" width="32" height="12" rx="6" fill="#ECFDF5"/>
+          <!-- signal arcs = "roger that" -->
+          <path d="M52 68 Q64 54 76 68" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M44 76 Q64 48 84 76" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <!-- dot -->
+          <circle cx="64" cy="80" r="5" fill="#10B981"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#064E3B"/>
+          <rect x="30" y="32" width="68" height="76" rx="9" fill="#ECFDF5"/>
+          <rect x="46" y="22" width="36" height="18" rx="9" fill="#064E3B"/>
+          <rect x="48" y="24" width="32" height="12" rx="6" fill="#ECFDF5"/>
+          <path d="M52 68 Q64 54 76 68" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M44 76 Q64 48 84 76" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <circle cx="64" cy="80" r="5" fill="#10B981"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#064E3B"/>
+          <rect x="30" y="32" width="68" height="76" rx="9" fill="#ECFDF5"/>
+          <rect x="46" y="22" width="36" height="18" rx="9" fill="#064E3B"/>
+          <rect x="48" y="24" width="32" height="12" rx="6" fill="#ECFDF5"/>
+          <path d="M52 68 Q64 54 76 68" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M44 76 Q64 48 84 76" stroke="#10B981" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <circle cx="64" cy="80" r="5" fill="#10B981"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Clipboard + signal arcs — "roger that" nod</div>
+  </div>
+
+  <!-- CONCEPT 5: Minimal copy icon -->
+  <div class="card">
+    <div class="icon-name">Concept 5</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#FEF3C7"/>
+          <!-- back doc -->
+          <rect x="44" y="38" width="46" height="56" rx="8" fill="#FDE68A"/>
+          <!-- front doc -->
+          <rect x="32" y="26" width="46" height="56" rx="8" fill="#F59E0B"/>
+          <!-- lines on front -->
+          <rect x="42" y="38" width="26" height="4" rx="2" fill="#FEF3C7"/>
+          <rect x="42" y="48" width="20" height="4" rx="2" fill="#FEF3C7"/>
+          <rect x="42" y="58" width="24" height="4" rx="2" fill="#FEF3C7"/>
+          <!-- checkmark on back -->
+          <path d="M54 74 L62 82 L82 62" stroke="#D97706" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#FEF3C7"/>
+          <rect x="44" y="38" width="46" height="56" rx="8" fill="#FDE68A"/>
+          <rect x="32" y="26" width="46" height="56" rx="8" fill="#F59E0B"/>
+          <rect x="42" y="38" width="26" height="4" rx="2" fill="#FEF3C7"/>
+          <rect x="42" y="48" width="20" height="4" rx="2" fill="#FEF3C7"/>
+          <rect x="42" y="58" width="24" height="4" rx="2" fill="#FEF3C7"/>
+          <path d="M54 74 L62 82 L82 62" stroke="#D97706" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#FEF3C7"/>
+          <rect x="44" y="38" width="46" height="56" rx="8" fill="#FDE68A"/>
+          <rect x="32" y="26" width="46" height="56" rx="8" fill="#F59E0B"/>
+          <rect x="42" y="38" width="26" height="4" rx="2" fill="#FEF3C7"/>
+          <rect x="42" y="48" width="20" height="4" rx="2" fill="#FEF3C7"/>
+          <rect x="42" y="58" width="24" height="4" rx="2" fill="#FEF3C7"/>
+          <path d="M54 74 L62 82 L82 62" stroke="#D97706" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Warm amber — stacked docs with confirm tick</div>
+  </div>
+
+  <!-- CONCEPT 7: Concept 5 design + Concept 1 colors -->
+  <div class="card">
+    <div class="icon-name">Concept 7</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="44" y="38" width="46" height="56" rx="8" fill="#93C5FD"/>
+          <rect x="32" y="26" width="46" height="56" rx="8" fill="#ffffff"/>
+          <rect x="42" y="38" width="26" height="4" rx="2" fill="#1D4ED8"/>
+          <rect x="42" y="48" width="20" height="4" rx="2" fill="#1D4ED8"/>
+          <rect x="42" y="58" width="24" height="4" rx="2" fill="#1D4ED8"/>
+          <path d="M54 74 L62 82 L82 62" stroke="#1D4ED8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="44" y="38" width="46" height="56" rx="8" fill="#93C5FD"/>
+          <rect x="32" y="26" width="46" height="56" rx="8" fill="#ffffff"/>
+          <rect x="42" y="38" width="26" height="4" rx="2" fill="#1D4ED8"/>
+          <rect x="42" y="48" width="20" height="4" rx="2" fill="#1D4ED8"/>
+          <rect x="42" y="58" width="24" height="4" rx="2" fill="#1D4ED8"/>
+          <path d="M54 74 L62 82 L82 62" stroke="#1D4ED8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="44" y="38" width="46" height="56" rx="8" fill="#93C5FD"/>
+          <rect x="32" y="26" width="46" height="56" rx="8" fill="#ffffff"/>
+          <rect x="42" y="38" width="26" height="4" rx="2" fill="#1D4ED8"/>
+          <rect x="42" y="48" width="20" height="4" rx="2" fill="#1D4ED8"/>
+          <rect x="42" y="58" width="24" height="4" rx="2" fill="#1D4ED8"/>
+          <path d="M54 74 L62 82 L82 62" stroke="#1D4ED8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Concept 5 layout · Concept 1 colors</div>
+  </div>
+
+  <!-- CONCEPT 10: Concept 7 adapted for 16px -->
+  <div class="card">
+    <div class="icon-name">Concept 10</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="48" y="42" width="48" height="58" rx="8" fill="#93C5FD"/>
+          <rect x="28" y="22" width="52" height="64" rx="8" fill="#ffffff"/>
+          <path d="M38 62 L52 76 L78 48" stroke="#1D4ED8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="48" y="42" width="48" height="58" rx="8" fill="#93C5FD"/>
+          <rect x="28" y="22" width="52" height="64" rx="8" fill="#ffffff"/>
+          <path d="M38 62 L52 76 L78 48" stroke="#1D4ED8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="48" y="42" width="48" height="58" rx="8" fill="#93C5FD"/>
+          <rect x="28" y="22" width="52" height="64" rx="8" fill="#ffffff"/>
+          <path d="M38 62 L52 76 L78 48" stroke="#1D4ED8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Concept 7 adapted — no lines, bolder checkmark, wider stack offset</div>
+  </div>
+
+  <!-- CONCEPT 8: Single doc on blue (16px candidate) -->
+  <div class="card">
+    <div class="icon-name">Concept 8</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="34" y="24" width="60" height="80" rx="10" fill="#ffffff"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="34" y="24" width="60" height="80" rx="10" fill="#ffffff"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <rect x="34" y="24" width="60" height="80" rx="10" fill="#ffffff"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Single white doc — stripped for small sizes</div>
+  </div>
+
+  <!-- CONCEPT 9: White checkmark on blue (16px candidate) -->
+  <div class="card">
+    <div class="icon-name">Concept 9</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <path d="M28 64 L52 88 L100 36" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <path d="M28 64 L52 88 L100 36" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#1D4ED8"/>
+          <path d="M28 64 L52 88 L100 36" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">White checkmark only — maximum clarity at 16px</div>
+  </div>
+
+  <!-- CONCEPT 6: Dark minimal -->
+  <div class="card">
+    <div class="icon-name">Concept 6</div>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#09090B"/>
+          <!-- bracket left -->
+          <path d="M38 36 L28 36 L28 92 L38 92" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- bracket right -->
+          <path d="M90 36 L100 36 L100 92 L90 92" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- copy icon in center -->
+          <rect x="50" y="44" width="32" height="32" rx="5" fill="none" stroke="#71717A" stroke-width="4"/>
+          <rect x="44" y="50" width="32" height="32" rx="5" fill="#09090B" stroke="white" stroke-width="4"/>
+          <!-- small lines -->
+          <rect x="52" y="60" width="16" height="3" rx="1.5" fill="white" opacity="0.6"/>
+          <rect x="52" y="67" width="12" height="3" rx="1.5" fill="white" opacity="0.6"/>
+        </svg>
+        <div class="size-label">128px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="48" height="48" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#09090B"/>
+          <path d="M38 36 L28 36 L28 92 L38 92" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M90 36 L100 36 L100 92 L90 92" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="50" y="44" width="32" height="32" rx="5" fill="none" stroke="#71717A" stroke-width="4"/>
+          <rect x="44" y="50" width="32" height="32" rx="5" fill="#09090B" stroke="white" stroke-width="4"/>
+          <rect x="52" y="60" width="16" height="3" rx="1.5" fill="white" opacity="0.6"/>
+          <rect x="52" y="67" width="12" height="3" rx="1.5" fill="white" opacity="0.6"/>
+        </svg>
+        <div class="size-label">48px</div>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="128" rx="28" fill="#09090B"/>
+          <path d="M38 36 L28 36 L28 92 L38 92" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M90 36 L100 36 L100 92 L90 92" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="50" y="44" width="32" height="32" rx="5" fill="none" stroke="#71717A" stroke-width="4"/>
+          <rect x="44" y="50" width="32" height="32" rx="5" fill="#09090B" stroke="white" stroke-width="4"/>
+          <rect x="52" y="60" width="16" height="3" rx="1.5" fill="white" opacity="0.6"/>
+          <rect x="52" y="67" width="12" height="3" rx="1.5" fill="white" opacity="0.6"/>
+        </svg>
+        <div class="size-label">16px</div>
+      </div>
+    </div>
+    <div class="concept-label">Dark minimal — copy icon in code brackets</div>
+  </div>
+
+</div>
+
+<p style="margin-top: 48px; font-size: 11px; color: #333; text-align: center;">
+  all icons are SVG — scalable, lightweight, ready for use as extension icons
+</p>
+
+</body>
+</html>

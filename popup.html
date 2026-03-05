@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CopyThat</title>
+    <style>
+      /* --- PURE CSS STYLES --- */
+      * {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --active-tab-bg: #ffffff; /* Default fallback */
+      }
+
+      body {
+        width: 450px;
+        height: 550px;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: #f8fafc;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+      }
+
+      /* --- Sidebar (Left) --- */
+      .sidebar {
+        width: 130px;
+        background-color: #f1f5f9;
+        border-right: 1px solid #cbd5e1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        flex-shrink: 0;
+        z-index: 20; /* Keep sidebar above editor shadow */
+      }
+
+      /* Sidebar Controls Container */
+      .sidebar-controls {
+        height: 42px;
+        border-bottom: 1px solid #e2e8f0;
+        background-color: #f8fafc;
+        position: relative;
+      }
+
+      /* View 1: Default Controls */
+      #default-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8px;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* View 2: Edit Mode Controls */
+      #edit-controls {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8px;
+        width: 100%;
+        height: 100%;
+        background-color: #e2e8f0;
+      }
+
+      /* Control Buttons */
+      .icon-btn {
+        padding: 4px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        width: 24px;
+        height: 24px;
+      }
+      .icon-btn:hover {
+        background-color: #ffffff;
+        border-color: #3b82f6;
+        color: #3b82f6;
+      }
+      .icon-btn.danger:hover {
+        border-color: #ef4444;
+        color: #ef4444;
+      }
+
+      #tab-count {
+        font-size: 11px;
+        font-weight: 600;
+        color: #64748b;
+        user-select: none;
+      }
+
+      /* Vertical Tab List */
+      .tab-bar {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 8px 0;
+      }
+      .tab-bar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .tab-bar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      /* Make all children of tab buttons pass drag events to the button */
+      .tab-btn * {
+        pointer-events: none;
+      }
+      .close-tab {
+        pointer-events: auto;
+      }
+
+      /* Individual Tab Button */
+      .tab-btn {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        border: none;
+        border-left: 3px solid transparent;
+
+        /* Use the CSS variable set by JS */
+        background-color: var(--tab-bg, transparent);
+
+        color: #475569;
+        cursor: pointer;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        transition: all 0.2s;
+        position: relative;
+      }
+
+      /* NEW: Add grab cursor for affordance */
+      .tab-btn[draggable="true"] {
+        cursor: grab;
+      }
+      .tab-btn[draggable="true"]:active {
+        cursor: grabbing;
+      }
+
+      .tab-btn span.title {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      /* Hover: slightly darken */
+      .tab-btn:hover {
+        filter: brightness(0.95);
+        color: #1e293b;
+      }
+
+      /* Active Tab: Match the background color perfectly */
+      .tab-btn.active {
+        border-left-color: #3b82f6;
+        background-color: var(--tab-bg) !important;
+        color: #1e293b;
+        font-weight: 600;
+        filter: none;
+        /* Add a subtle shadow to separate from sidebar list */
+        box-shadow: inset 2px 0 0 #3b82f6;
+      }
+
+      /* Drag Visual Feedback */
+      .tab-btn.drag-over {
+        border-top: 2px solid #3b82f6; /* Visual cue for drop position */
+        opacity: 0.8;
+      }
+
+      /* Close Button */
+      .close-tab {
+        font-size: 14px;
+        color: #64748b;
+        opacity: 0;
+        transition: opacity 0.2s;
+        padding: 2px;
+        margin-left: auto;
+        cursor: pointer; /* Force pointer cursor override */
+      }
+      .tab-btn:hover .close-tab {
+        opacity: 1;
+      }
+      .close-tab:hover {
+        color: #ef4444;
+      }
+
+      /* Disabled Close Button */
+      .close-tab.disabled {
+        cursor: not-allowed;
+        color: #94a3b8 !important;
+      }
+      .close-tab.disabled:hover {
+        background-color: transparent !important;
+        color: #94a3b8 !important;
+      }
+
+      /* Checkbox (Only visible in edit mode) */
+      .tab-checkbox {
+        pointer-events: none;
+        width: 14px;
+        height: 14px;
+      }
+
+      /* --- Editor Area (Right) --- */
+      #editor-container {
+        flex: 1;
+        background-color: var(--active-tab-bg);
+        transition: background-color 0.3s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .editor-content {
+        padding: 20px;
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+      }
+
+      #document-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0 0 16px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px solid transparent;
+        outline: none;
+        width: calc(100% - 60px);
+        overflow-wrap: break-word;
+      }
+      #document-title:hover {
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+      }
+
+      #editor {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #334155;
+        outline: none;
+        white-space: pre-wrap;
+      }
+      #editor:empty:before {
+        content: attr(placeholder);
+        color: #64748b;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      /* --- Word Count --- */
+      #word-count {
+        position: absolute;
+        bottom: 10px;
+        right: 14px;
+        font-size: 11px;
+        color: #94a3b8;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      /* --- Copy Button --- */
+      #copy-tab-content-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        color: #475569;
+        transition: all 0.2s;
+      }
+      #copy-tab-content-btn:hover {
+        background-color: #ffffff;
+        border-color: #3b82f6;
+        color: #3b82f6;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      /* --- Toast --- */
+      #copy-toast {
+        position: fixed;
+        bottom: 20px;
+        left: 57%;
+        transform: translateX(-50%) translateY(100px);
+        background-color: #1e293b;
+        color: #ffffff;
+        font-size: 12px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        opacity: 0;
+        transition: all 0.3s;
+        pointer-events: none;
+        z-index: 100;
+        white-space: nowrap;
+      }
+      #copy-toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-controls">
+        <!-- Default Mode controls -->
+        <div id="default-controls">
+          <div id="tab-count">0 tabs</div>
+          <div style="display: flex; gap: 4px">
+            <button id="edit-mode-btn" class="icon-btn" title="Manage Tabs">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </button>
+            <button id="new-tab-btn" class="icon-btn" title="New Tab">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Edit Mode controls -->
+        <div id="edit-controls">
+          <button id="select-all-btn" class="icon-btn" title="Select All">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </button>
+          <div style="display: flex; gap: 4px">
+            <button
+              id="delete-selected-btn"
+              class="icon-btn danger"
+              title="Delete Selected"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path
+                  d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                ></path>
+              </svg>
+            </button>
+            <button id="cancel-edit-btn" class="icon-btn" title="Cancel">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav class="tab-bar" id="tab-nav-bar">
+        <!-- Tabs injected here -->
+      </nav>
+    </div>
+
+    <div id="editor-container">
+      <button id="copy-tab-content-btn" title="Copy tab content">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path
+            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+          ></path>
+        </svg>
+      </button>
+
+      <div class="editor-content">
+        <h2 id="document-title" contenteditable="true" placeholder="Title"></h2>
+        <div
+          id="editor"
+          contenteditable="true"
+          spellcheck="false"
+          placeholder="Type something..."
+        ></div>
+      </div>
+      <div id="word-count">0 words</div>
+    </div>
+
+    <div id="copy-toast">Copied!</div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

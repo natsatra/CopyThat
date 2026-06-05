@@ -1,21 +1,31 @@
 {
   "manifest_version": 3,
   "name": "CopyThat",
-  "version": "1.0",
-  "description": "An omnipresent notepad with tabbed sections for your notes. You can store snippets, copy the contents of a tab with a single click and paste them anywhere in your browser.",
+  "version": "1.0.0",
+  "description": "A tabbed notepad for storing and copying text snippets. Organise your notes into colour-coded tabs, copy any tab's contents to the clipboard with one click, and paste wherever you need it.",
   "permissions": [
-    "storage"
+    "storage",
+    "clipboardWrite"
   ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "copythat@mathangi",
+      "strict_min_version": "109.0"
+    }
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Open CopyThat",
-    "default_icon": "icon.jpg"
+    "default_icon": {
+      "16": "icon-16px.png",
+      "48": "icon-48px.png"
+    }
   },
   "icons": {
 
-    "16": "icon.jpg",  
-    "48": "icon.jpg",
-    "128": "icon.jpg"
+    "16": "icon-16px.png",  
+    "48": "icon-48px.png",
+    "128": "icon-128px.png"
   
   }
 }

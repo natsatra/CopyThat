@@ -69,6 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
             picker.appendChild(swatch);
         });
 
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'swatch-reset';
+        resetBtn.textContent = 'Reset';
+        resetBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            tab.color = null;
+            hideSwatchPicker();
+            renderTabs();
+            saveState();
+        });
+        picker.appendChild(resetBtn);
+
         document.body.appendChild(picker);
         activeSwatchPicker = picker;
 
@@ -293,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isEditMode) {
             const colorDot = document.createElement('span');
             colorDot.className = 'color-dot';
+            colorDot.title = 'Pick a color';
             colorDot.style.backgroundColor = color;
             colorDot.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -464,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         syncContent();
-        const newTab = new Tab("New note", "", TAB_COLORS[tabs.length % TAB_COLORS.length]);
+        const newTab = new Tab("I wan", "", TAB_COLORS[tabs.length % TAB_COLORS.length]);
         tabs.push(newTab);
         activeTabId = newTab.id;
         renderTabs();

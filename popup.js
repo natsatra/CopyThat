@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
     const WELCOME_TITLE = "Welcome to CopyThat!";
-    const WELCOME_CONTENT = "In this notepad, you can type or paste your text and code snippets to use anywhere in your browser.\n\nThe copy icon copies the contents of your current tab.\n\nYou can organize your snippets by using different colored tabs for each one. Use the color picker to choose a different color. You can drag and drop to reorder the tabs the way you like.\n\nUse the list icon in the top bar to delete one or more tabs.\n\nNote: for code snippets, space-indented code (e.g. Python with 4 spaces) is preserved reliably. Tab-indented code may have its tabs converted to spaces on save.";
+    const WELCOME_CONTENT = "Type or paste your text and code snippets here to copy them anywhere.\n\nThe copy icon (top right) copies the entire contents of the current tab to your clipboard.\n\nColor-code your tabs using the color picker that appears on hover.\n\nDouble-click a tab name to rename it inline. Drag and drop to reorder tabs.\n\nUse the list icon (top left) to select and delete multiple tabs at once.\n\nNote: Space-indented code (e.g. Python with 4 spaces) is preserved reliably. Tab-indented code may have its tabs converted to spaces on save.";
 
     let tabs = [];
     let activeTabId = null;
@@ -159,6 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
             saveContent();
         });
         documentTitle.addEventListener('input', saveTitle);
+        documentTitle.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                editor.focus();
+            }
+        });
         copyTabContentBtn.addEventListener('click', copyTabContent);
 
         // Edit Mode Listeners
@@ -477,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         syncContent();
-        const newTab = new Tab("I wan", "", TAB_COLORS[tabs.length % TAB_COLORS.length]);
+        const newTab = new Tab("New note", "", TAB_COLORS[tabs.length % TAB_COLORS.length]);
         tabs.push(newTab);
         activeTabId = newTab.id;
         renderTabs();

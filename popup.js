@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Selection State
     let isEditMode = false;
-    let selectedTabIds = new Set();
+    const selectedTabIds = new Set();
+    let pendingDelete = false;
+    let pendingDeleteTimeout = null;
 
     // Colors Array
     const TAB_COLORS = [
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setInterval(() => {
             const tab = tabs.find(t => t.id === activeTabId);
-            if (tab) updateTimestamp(tab.updatedAt);
+            if (tab) {updateTimestamp(tab.updatedAt);}
         }, 30000);
 
         // Core Listeners
@@ -150,9 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const text = e.clipboardData.getData('text/plain');
             const remaining = CONTENT_MAX_CHARS - editor.innerText.length;
             const textToInsert = text.slice(0, remaining);
-            if (text.length > remaining) showToast(`Character limit of ${CONTENT_MAX_CHARS} reached.`);
+            if (text.length > remaining) {showToast(`Character limit of ${CONTENT_MAX_CHARS} reached.`);}
             const sel = window.getSelection();
-            if (!sel.rangeCount) return;
+            if (!sel.rangeCount) {return;}
             sel.deleteFromDocument();
             sel.getRangeAt(0).insertNode(document.createTextNode(textToInsert));
             sel.collapseToEnd();
@@ -175,10 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Character limit enforcement
         editor.addEventListener('keydown', (e) => {
-            if (e.ctrlKey || e.metaKey || e.altKey) return;
-            if (e.key.length !== 1 && e.key !== 'Enter') return;
+            if (e.ctrlKey || e.metaKey || e.altKey) {return;}
+            if (e.key.length !== 1 && e.key !== 'Enter') {return;}
             const sel = window.getSelection();
-            if (sel && sel.toString().length > 0) return;
+            if (sel && sel.toString().length > 0) {return;}
             if (editor.innerText.length >= CONTENT_MAX_CHARS) {
                 e.preventDefault();
                 showToast(`Character limit of ${CONTENT_MAX_CHARS} reached.`);
@@ -187,12 +189,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sidebar keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (document.activeElement?.contentEditable === 'true') return;
-            if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+            if (document.activeElement?.contentEditable === 'true') {return;}
+            if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {return;}
             e.preventDefault();
             const currentIndex = tabs.findIndex(t => t.id === activeTabId);
-            if (e.key === 'ArrowUp') switchTab(tabs[(currentIndex - 1 + tabs.length) % tabs.length].id);
-            if (e.key === 'ArrowDown') switchTab(tabs[(currentIndex + 1) % tabs.length].id);
+            if (e.key === 'ArrowUp') {switchTab(tabs[(currentIndex - 1 + tabs.length) % tabs.length].id);}
+            if (e.key === 'ArrowDown') {switchTab(tabs[(currentIndex + 1) % tabs.length].id);}
         });
     }
 
@@ -220,7 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleEditMode() {
         isEditMode = !isEditMode;
-        selectedTabIds.clear(); 
+        selectedTabIds.clear();
+        pendingDelete = false;
+        clearTimeout(pendingDeleteTimeout);
         
         if (isEditMode) {
             defaultControls.style.display = 'none';
@@ -251,28 +255,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteSelectedTabs() {
-        if (selectedTabIds.size === 0) return;
+        if (selectedTabIds.size === 0) {return;}
 
-        if (confirm(`Delete ${selectedTabIds.size} selected tabs?`)) {
-            const deletedTabs = tabs.filter(t => selectedTabIds.has(t.id));
-            storage.remove(deletedTabs.map(t => `tab_${t.id}`));
-            tabs = tabs.filter(t => !selectedTabIds.has(t.id));
-
-            if (selectedTabIds.has(activeTabId) || tabs.length === 0) {
-                if (tabs.length > 0) {
-                    activeTabId = tabs[0].id;
-                } else {
-                    const welcomeTab = deletedTabs.find(t => t.title === WELCOME_TITLE && t.content === WELCOME_CONTENT);
-                    const newTab = welcomeTab || new Tab("New note", "", TAB_COLORS[0]);
-                    tabs.push(newTab);
-                    activeTabId = newTab.id;
-                }
-            }
-            
-            toggleEditMode();
-            loadTabContent(activeTabId);
-            saveState();
+        if (!pendingDelete) {
+            pendingDelete = true;
+            clearTimeout(pendingDeleteTimeout);
+            showToast(`Delete ${selectedTabIds.size} tab${selectedTabIds.size > 1 ? 's' : ''}? Click delete again to confirm.`);
+            pendingDeleteTimeout = setTimeout(() => { pendingDelete = false; }, 2000);
+            return;
         }
+
+        clearTimeout(pendingDeleteTimeout);
+        pendingDelete = false;
+
+        const deletedTabs = tabs.filter(t => selectedTabIds.has(t.id));
+        storage.remove(deletedTabs.map(t => `tab_${t.id}`));
+        tabs = tabs.filter(t => !selectedTabIds.has(t.id));
+
+        if (selectedTabIds.has(activeTabId) || tabs.length === 0) {
+            if (tabs.length > 0) {
+                activeTabId = tabs[0].id;
+            } else {
+                const welcomeTab = deletedTabs.find(t => t.title === WELCOME_TITLE && t.content === WELCOME_CONTENT);
+                const newTab = welcomeTab || new Tab("New note", "", TAB_COLORS[0]);
+                tabs.push(newTab);
+                activeTabId = newTab.id;
+            }
+        }
+
+        toggleEditMode();
+        loadTabContent(activeTabId);
+        saveState();
     }
 
     // --- Rendering ---
@@ -348,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     tab.title = newTitle;
                     titleSpan.textContent = newTitle;
                     btn.title = newTitle;
-                    if (tab.id === activeTabId) documentTitle.innerText = newTitle;
+                    if (tab.id === activeTabId) {documentTitle.innerText = newTitle;}
                     debouncedSaveState();
                 }
 
@@ -401,10 +414,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.dataset.index = index;
                     btn.style.setProperty('--tab-bg', color);
                     const titleSpan = btn.querySelector('.title');
-                    if (titleSpan) titleSpan.textContent = tab.title;
+                    if (titleSpan) {titleSpan.textContent = tab.title;}
                     if (isEditMode) {
                         const checkbox = btn.querySelector('.tab-checkbox');
-                        if (checkbox) checkbox.checked = selectedTabIds.has(tab.id);
+                        if (checkbox) {checkbox.checked = selectedTabIds.has(tab.id);}
                     }
                 }
             } else {
@@ -443,12 +456,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleDragLeave(e) {
-        if (e.currentTarget.contains(e.relatedTarget)) return;
+        if (e.currentTarget.contains(e.relatedTarget)) {return;}
         e.currentTarget.classList.remove('drag-over');
     }
 
     function handleDragEnd(e) {
-        if(e.target) e.target.style.opacity = '1';
+        if(e.target) {e.target.style.opacity = '1';}
         const buttons = document.querySelectorAll('.tab-btn');
         buttons.forEach(btn => btn.classList.remove('drag-over'));
         draggedTabIndex = null;
@@ -492,7 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function switchTab(id) {
-        if (id === activeTabId) return;
+        if (id === activeTabId) {return;}
         syncContent();
         activeTabId = id;
         loadTabContent(id);
@@ -523,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function saveContent() {
-        if (editor.innerHTML === '<br>') editor.innerHTML = '';
+        if (editor.innerHTML === '<br>') {editor.innerHTML = '';}
         syncContent();
         debouncedSaveState();
     }
@@ -540,11 +553,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const hours = Math.floor(diff / 3600000);
         const days = Math.floor(diff / 86400000);
         let label;
-        if (diff < 60000) label = 'Edited just now';
-        else if (mins < 60) label = `Edited ${mins}m ago`;
-        else if (hours < 24) label = `Edited ${hours}h ago`;
-        else if (days === 1) label = 'Edited yesterday';
-        else label = `Edited ${new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+        if (diff < 60000) {label = 'Edited just now';}
+        else if (mins < 60) {label = `Edited ${mins}m ago`;}
+        else if (hours < 24) {label = `Edited ${hours}h ago`;}
+        else if (days === 1) {label = 'Edited yesterday';}
+        else {label = `Edited ${new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;}
         updatedAtEl.textContent = label;
     }
 
@@ -578,13 +591,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         navigator.clipboard.writeText(content).then(() => {
             showToast("Copied that to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy that, try again.", err);
+        }).catch(() => {
+            showToast("Failed to copy. Please try again.");
         });
     }
 
     function showToast(message = "Copied!") {
-        if (toastTimeout) clearTimeout(toastTimeout);
+        if (toastTimeout) {clearTimeout(toastTimeout);}
         copyToast.textContent = message;
         copyToast.classList.add('show');
         toastTimeout = setTimeout(() => {

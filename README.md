@@ -6,8 +6,20 @@ CopyThat is a Manifest V3 browser extension that runs entirely inside its own po
 
 Compatible with Chrome (and Chromium-based browsers) and Firefox 140+.
 
-<!-- TODO: replace with a real screenshot of the popup — sidebar with a few colour-coded tabs and the editor in view. Save as screenshot.png in the repo root. -->
-![The CopyThat popup: colour-coded tabs in the sidebar, editor on the right](screenshot.png)
+<p align="center">
+  <img src="ct-1.png" alt="Preview of the CopyThat popup: colour-coded tabs in the sidebar, editor on the right" width="420">
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="ct-2.gif" alt="Adding a note and using the copy icon to copy the contents in one click" width="100%"></td>
+    <td width="50%"><img src="ct-3.gif" alt="Colour-coding a tab from the swatch picker and resetting it back to the original" width="100%"></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="ct-4.gif" alt="Reordering tabs by drag and drop" width="100%"></td>
+    <td width="50%"><img src="ct-5.gif" alt="Deleting tabs in bulk" width="100%"></td>
+  </tr>
+</table>
 
 ---
 

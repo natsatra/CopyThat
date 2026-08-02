@@ -12,12 +12,9 @@ Compatible with Chrome (and Chromium-based browsers) and Firefox 140+.
 
 <table>
   <tr>
-    <td width="50%"><img src="ct-2.gif" alt="Adding a note and using the copy icon to copy the contents in one click" width="100%"></td>
-    <td width="50%"><img src="ct-3.gif" alt="Colour-coding a tab from the swatch picker and resetting it back to the original" width="100%"></td>
-  </tr>
-  <tr>
-    <td width="50%"><img src="ct-4.gif" alt="Reordering tabs by drag and drop" width="100%"></td>
-    <td width="50%"><img src="ct-5.gif" alt="Deleting tabs in bulk" width="100%"></td>
+    <td width="33%"><img src="ct-2.gif" alt="Adding a note and using the copy icon to copy the contents in one click" width="100%"></td>
+    <td width="33%"><img src="ct-3.gif" alt="Colour-coding a tab from the swatch picker and resetting it back to the original" width="100%"></td>
+    <td width="33%"><img src="ct-4.gif" alt="Reordering tabs by drag and drop" width="100%"></td>
   </tr>
 </table>
 
